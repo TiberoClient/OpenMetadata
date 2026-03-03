@@ -427,7 +427,10 @@ class LineageParser:
             return lr_dialect
 
         try:
-            lr_sqlfluff = get_sqlfluff_lineage_runner(query, dialect.value)
+            dlct = dialect.value
+            if (dialect == Dialect.TIBERO):
+                dlct = "oracle"
+            lr_sqlfluff = get_sqlfluff_lineage_runner(query, dlct)
             _ = len(lr_sqlfluff.get_column_lineage()) + len(
                 set(lr_sqlfluff.source_tables).union(
                     set(lr_sqlfluff.target_tables).union(

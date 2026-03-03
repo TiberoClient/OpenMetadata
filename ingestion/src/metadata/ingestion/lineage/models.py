@@ -88,6 +88,9 @@ from metadata.generated.schema.entity.services.connections.database.unityCatalog
 from metadata.generated.schema.entity.services.connections.database.verticaConnection import (
     VerticaType,
 )
+from metadata.generated.schema.entity.services.connections.database.tiberoConnection import (
+    TiberoType,
+)
 from metadata.utils.singleton import Singleton
 
 
@@ -120,6 +123,7 @@ class Dialect(Enum):
     MARIADB = "mariadb"
     TRINO = "trino"
     VERTICA = "vertica"
+    TIBERO = "tibero"
 
 
 MAP_CONNECTION_TYPE_DIALECT: Dict[str, Dialect] = {
@@ -147,6 +151,7 @@ MAP_CONNECTION_TYPE_DIALECT: Dict[str, Dialect] = {
     str(TrinoType.Trino.value): Dialect.TRINO,
     str(VerticaType.Vertica.value): Dialect.VERTICA,
     str(GreenplumType.Greenplum.value): Dialect.POSTGRES,
+    str(TiberoType.Tibero.value): Dialect.TIBERO,
 }
 
 

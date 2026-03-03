@@ -112,6 +112,7 @@ import {
   TERADATA,
   TOPIC_DEFAULT,
   TRINO,
+  TIBERO,
   UNITYCATALOG,
   VERTICA,
 } from '../constants/Services.constant';
@@ -506,6 +507,9 @@ class ServiceUtilClassBase {
 
       case this.DatabaseServiceTypeSmallCase.Synapse:
         return SYNAPSE;
+
+      case this.DatabaseServiceTypeSmallCase.Tibero:
+        return TIBERO;
 
       case this.MessagingServiceTypeSmallCase.CustomMessaging:
         return TOPIC_DEFAULT;

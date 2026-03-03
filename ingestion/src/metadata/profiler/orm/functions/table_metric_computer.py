@@ -250,6 +250,63 @@ class OracleTableMetricComputer(BaseTableMetricComputer):
             return super().compute()
         return res
 
+class TiberoTableMetricComputer(BaseTableMetricComputer):
+    """Tibero Table Metric Computer"""
+
+    def compute(self):
+        """Compute table metrics for tibero"""
+        create_date = cte(
+            self._build_query(
+                [
+                    Column("owner"),
+                    Column("object_name").label("table_name"),
+                    Column("created"),
+                ],
+                self._build_table("DBA_OBJECTS", None),
+                [
+                    func.lower(Column("owner")) == self.schema_name.lower(),
+                    func.lower(Column("object_name")) == self.table_name.lower(),
+                ],
+            )
+        )
+
+        row_count = cte(
+            self._build_query(
+                [
+                    Column("owner"),
+                    Column("table_name"),
+                    Column("NUM_ROWS"),
+                ],
+                self._build_table("DBA_TABLES", None),
+                [
+                    func.lower(Column("owner")) == self.schema_name.lower(),
+                    func.lower(Column("table_name")) == self.table_name.lower(),
+                ],
+            )
+        )
+
+        columns = [
+            Column("NUM_ROWS").label("rowCount"),
+            Column("created").label("createDateTime"),
+            *self._get_col_names_and_count(),
+        ]
+        query = self._build_query(columns, row_count).join(
+            create_date,
+            and_(
+                row_count.c.table_name == create_date.c.table_name,
+                row_count.c.owner == create_date.c.owner,
+            ),
+        )
+
+        res = self.runner._session.execute(query).first()
+        if not res:
+            return None
+        if res.rowCount is None or (
+            res.rowCount == 0 and self._entity.tableType == TableType.View
+        ):
+            # if we don't have any row count, fallback to the base logic
+            return super().compute()
+        return res
 
 class ClickHouseTableMetricComputer(BaseTableMetricComputer):
     """ClickHouse Table Metric Computer"""
@@ -506,3 +563,4 @@ table_metric_computer_factory.register(
 )
 table_metric_computer_factory.register(Dialects.Oracle, OracleTableMetricComputer)
 table_metric_computer_factory.register(Dialects.Snowflake, SnowflakeTableMetricComputer)
+table_metric_computer_factory.register(Dialects.Tibero, TiberoTableMetricComputer)

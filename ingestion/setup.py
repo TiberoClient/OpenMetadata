@@ -69,6 +69,7 @@ VERSIONS = {
     "pyathena": "pyathena~=3.0",
     "sqlalchemy-bigquery": "sqlalchemy-bigquery>=1.2.2",
     "presidio-analyzer": "presidio-analyzer==2.2.358",
+    "tibero": "sqlalchemy-tibero==1.4.56",
 }
 
 COMMONS = {
@@ -358,6 +359,7 @@ plugins: Dict[str, Set[str]] = {
     "tableau": {VERSIONS["tableau"], VERSIONS["validators"], VERSIONS["packaging"]},
     "teradata": {VERSIONS["teradata"]},
     "trino": {VERSIONS["trino"], DATA_DIFF["trino"]},
+    "tibero": {VERSIONS["tibero"]},
     "vertica": {"sqlalchemy-vertica[vertica-python]>=0.0.5", DATA_DIFF["vertica"]},
     "pii-processor": {
         VERSIONS["spacy"],
@@ -462,6 +464,7 @@ test = {
     "faker==37.1.0",  # The version needs to be fixed to prevent flaky tests!
     *plugins["exasol"],
     VERSIONS["opensearch"],
+    *plugins["tibero"],
 }
 
 if sys.version_info >= (3, 9):

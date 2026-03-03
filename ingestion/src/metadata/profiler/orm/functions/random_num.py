@@ -92,6 +92,7 @@ def _(*_, **__):
 
 
 @compiles(RandomNumFn, Dialects.Oracle)
+@compiles(RandomNumFn, Dialects.Tibero)
 def _(*_, **__):
     """Oracle random logic"""
     return "ABS(DBMS_RANDOM.VALUE) * 100"

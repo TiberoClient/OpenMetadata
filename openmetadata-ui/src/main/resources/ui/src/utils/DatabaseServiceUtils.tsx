@@ -66,6 +66,7 @@ import teradataConnection from '../jsons/connectionSchemas/connections/database/
 import trinoConnection from '../jsons/connectionSchemas/connections/database/trinoConnection.json';
 import unityCatalogConnection from '../jsons/connectionSchemas/connections/database/unityCatalogConnection.json';
 import verticaConnection from '../jsons/connectionSchemas/connections/database/verticaConnection.json';
+import tiberoConnection from "../jsons/connectionSchemas/connections/database/tiberoConnection.json";
 import { exportDatabaseServiceDetailsInCSV } from '../rest/serviceAPI';
 import { getEntityImportPath } from './EntityUtils';
 import { t } from './i18next/LocalUtil';
@@ -292,6 +293,11 @@ export const getDatabaseConfig = (type: DatabaseServiceType) => {
     }
     case DatabaseServiceType.Teradata: {
       schema = teradataConnection;
+
+      break;
+    }
+case DatabaseServiceType.Tibero: {
+      schema = tiberoConnection;
 
       break;
     }

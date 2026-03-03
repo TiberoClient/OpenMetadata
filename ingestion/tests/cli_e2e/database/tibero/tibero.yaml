@@ -1,0 +1,37 @@
+source:
+  type: tibero
+  serviceName: e2e_tibero
+  serviceConnection:
+    config:
+      #hostPort: $E2E_TIBERO_HOST_PORT
+      #username: $E2E_TIBERO_USERNAME
+      #password: $E2E_TIBERO_PASSWORD
+      hostPort: localhost:33491
+      username: tester
+      password: "1234"
+      type: Tibero
+      scheme: tibero+pyodbc
+      driver: Tibero7Driver
+      databaseName: tibero
+      supportsMetadataExtraction: true
+      supportsLineageExtraction: true
+  sourceConfig:
+    config:
+      markDeletedTables: true
+      includeTables: true
+      includeViews: true
+      type: DatabaseMetadata
+      includeDDL: true
+      schemaFilterPattern:
+        includes:
+          - "^tester$"
+sink:
+  type: metadata-rest
+  config: {}
+workflowConfig:
+  loggerLevel: DEBUG # DEBUG, INFO, WARN or ERROR
+  openMetadataServerConfig:
+    hostPort: http://localhost:8585/api
+    authProvider: openmetadata
+    securityConfig:
+      jwtToken: "eyJraWQiOiJHYjM4OWEtOWY3Ni1nZGpzLWE5MmotMDI0MmJrOTQzNTYiLCJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJvcGVuLW1ldGFkYXRhLm9yZyIsInN1YiI6InRpYmVybyIsInJvbGVzIjpbIkFkbWluIl0sImVtYWlsIjoidGliZXJvQHRtYXguY28ua3IiLCJpc0JvdCI6ZmFsc2UsInRva2VuVHlwZSI6IlBFUlNPTkFMX0FDQ0VTUyIsImlhdCI6MTc1ODUxNDA1MiwiZXhwIjoxNzY2MjkwMDUyfQ.TfWHpUamOy-tUMBhG_MwCVWJPeWVcG15QGis-VzyzV9iRZLCrK_7WnM8C7OcsUHMzdB2dPdlBlbnH2xZyAJ6BIQqyLtvcacUeSF1gW29V-iLXZ9DmzVgJcPVjeMnOcMtvFTcCUomJFkQ0N5tW4B_sZbSGQ2tWDDyzUfq0w2f_w9wAcYh83Gy_EM2It2XL1QCfZuUU1ffZ2ktp36LYSGeg0WPRyAq-B-lMz6pXun4vP-CdT04QEBhK6TW9yZfPtuzSMK0SbuyB68D9xXFRK6efw48nvoYwNwYwWeGbkw-i9bBL6Bx0MNSVluciMV01gjtcyMnolyzw7eix959u_XsYA"

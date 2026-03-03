@@ -41,6 +41,7 @@ def _(elements, compiler, **kwargs):
 
 
 @compiles(DateAddFn, Dialects.Oracle)
+@compiles(DateAddFn, Dialects.Tibero)
 def _(elements, compiler, **kwargs):
     """generic date and datetime function"""
     interval = elements.clauses.clauses[0].value

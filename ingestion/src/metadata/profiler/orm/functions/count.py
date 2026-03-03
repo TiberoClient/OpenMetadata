@@ -38,6 +38,7 @@ def _(element, compiler, **kw):
 
 
 @compiles(CountFn, Dialects.Oracle)
+@compiles(CountFn, Dialects.Tibero)
 def _(element, compiler, **kw):
     col_type = element.clauses.clauses[0].type
     if isinstance(col_type, HexByteString):

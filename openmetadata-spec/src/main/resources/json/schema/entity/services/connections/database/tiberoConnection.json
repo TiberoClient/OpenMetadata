@@ -1,0 +1,111 @@
+{
+  "$id": "https://open-metadata.org/schema/entity/services/connections/database/tiberoConnection.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TiberoConnection",
+  "description": "Tibero Database Connection Config",
+  "type": "object",
+  "javaType": "org.openmetadata.schema.services.connections.database.TiberoConnection",
+  "definitions": {
+    "tiberoType": {
+      "description": "Service type.",
+      "type": "string",
+      "enum": ["Tibero"],
+      "default": "Tibero"
+    },
+    "tiberoScheme": {
+      "description": "SQLAlchemy driver scheme options.",
+      "type": "string",
+      "enum": ["tibero+pyodbc"],
+      "default": "tibero+pyodbc"
+    }
+  },
+  "properties": {
+    "type": {
+      "title": "Service Type",
+      "description": "Service Type",
+      "$ref": "#/definitions/tiberoType",
+      "default": "Tibero"
+    },
+    "scheme": {
+      "title": "Connection Scheme",
+      "description": "SQLAlchemy driver scheme options.",
+      "$ref": "#/definitions/tiberoScheme",
+      "default": "tibero+pyodbc"
+    },
+    "username": {
+      "title": "Username",
+      "type": "string"
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "format": "password"
+    },
+    "hostPort": {
+      "title": "Host and Port",
+      "type": "string"
+    },
+    "databaseName": {
+      "title": "Database Name",
+      "type": "string"
+    },
+    "driver": {
+      "title": "Driver",
+      "description": "SQLAlchemy with ODBC driver for Tibero (default: Tibero7Driver)",
+      "type": "string",
+      "default": "Tibero7Driver"
+    },
+    "connectionOptions": {
+      "$ref": "../connectionBasicType.json#/definitions/connectionOptions"
+    },
+    "connectionArguments": {
+      "$ref": "../connectionBasicType.json#/definitions/connectionArguments"
+    },
+    "supportsMetadataExtraction": {
+      "title": "Supports Metadata Extraction",
+      "$ref": "../connectionBasicType.json#/definitions/supportsMetadataExtraction"
+    },
+    "supportsUsageExtraction": {
+      "$ref": "../connectionBasicType.json#/definitions/supportsUsageExtraction"
+    },
+    "supportsLineageExtraction": {
+      "$ref": "../connectionBasicType.json#/definitions/supportsLineageExtraction"
+    },
+    "supportsDBTExtraction": {
+      "$ref": "../connectionBasicType.json#/definitions/supportsDBTExtraction"
+    },
+    "supportsProfiler": {
+      "title": "Supports Profiler",
+      "$ref": "../connectionBasicType.json#/definitions/supportsProfiler"
+    },
+    "supportsQueryComment": {
+      "title": "Supports Query Comment",
+      "$ref": "../connectionBasicType.json#/definitions/supportsQueryComment"
+    },
+    "supportsDataDiff": {
+        "title": "Supports Data Diff Extraction.",
+        "$ref": "../connectionBasicType.json#/definitions/supportsDataDiff"
+    },
+    "schemaFilterPattern":{
+      "title": "Default Schema Filter Pattern",
+      "description": "Regex to only include/exclude schemas that matches the pattern.",
+      "$ref": "../../../../type/filterPattern.json#/definitions/filterPattern",
+      "default": {
+        "includes": [],
+        "excludes": ["^SYS$", "^SYSCAT$", "^SYSGIS$", "^SYSBACKUP$", "^LBACSYS$", "^OUTLN$"]
+      }
+    },
+    "tableFilterPattern": {
+      "title": "Default Table Filter Pattern",
+      "description": "Regex to only include/exclude tables that matches the pattern.",
+      "$ref": "../../../../type/filterPattern.json#/definitions/filterPattern"
+    },
+    "databaseFilterPattern": {
+      "title": "Default Database Filter Pattern",
+      "description": "Regex to only include/exclude databases that matches the pattern.",
+      "$ref": "../../../../type/filterPattern.json#/definitions/filterPattern"
+    }
+  },
+  "required": ["username", "type", "scheme", "supportsMetadataExtraction"],
+  "additionalProperties": false
+}

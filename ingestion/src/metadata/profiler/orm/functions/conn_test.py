@@ -37,6 +37,7 @@ def _(*_, **__):
 
 
 @compiles(ConnTestFn, Dialects.Oracle)
+@compiles(ConnTestFn, Dialects.Tibero)
 def _(*_, **__):
     return "SELECT 42 FROM DUAL"
 
